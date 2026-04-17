@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Mono", monospace;
+  --font-mono: "VT323", monospace;
+  --font-display: "VT323", monospace;
+
+  --color-glitch-cyan: #00ffff;
+  --color-glitch-magenta: #ff00ff;
+  --color-glitch-black: #000000;
+  --color-glitch-white: #ffffff;
+}
+
+:root {
+  background-color: #000000;
+  color: #00ffff;
+  cursor: crosshair;
+}
+
+@layer utilities {
+  .noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.15;
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+  }
+
+  .tear {
+    animation: screen-tear 0.3s infinite step-end;
+  }
+
+  .glitch-magenta {
+    text-shadow: 2px 0 #ff00ff;
+  }
+  
+  .glitch-cyan {
+    text-shadow: -2px 0 #00ffff;
+  }
+
+  .raw-border {
+    border: 4px solid #00ffff;
+    box-shadow: 4px 4px 0 #ff00ff;
+  }
+
+  .scanline {
+    width: 100%;
+    height: 100px;
+    z-index: 100;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.2) 10%, rgba(0, 0, 0, 0.1) 11%);
+    opacity: 0.1;
+    position: fixed;
+    top: -100px;
+    animation: scanline 4s linear infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes screen-tear {
+  0% { transform: translate(0); clip-path: inset(0 0 0 0); }
+  10% { transform: translate(-5px, 2px); clip-path: inset(10% 0 40% 0); }
+  20% { transform: translate(5px, -2px); clip-path: inset(30% 0 10% 0); }
+  30% { transform: translate(0); }
+  100% { transform: translate(0); }
+}
+
+@keyframes scanline {
+  0% { top: -100px; }
+  100% { top: 100%; }
+}
+
+/* Hard reset for cryptic vibes */
+* {
+  text-transform: uppercase;
+}
